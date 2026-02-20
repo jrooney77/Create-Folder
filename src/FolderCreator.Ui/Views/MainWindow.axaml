@@ -46,7 +46,7 @@
       <!-- Main Folder -->
       <StackPanel Spacing="8">
         <TextBlock Text="Primary Folder Name" Opacity="0.85"/>
-        <TextBox Text="{Binding MainFolderName}"
+        <TextBox Text="{Binding MainFolderName, UpdateSourceTrigger=PropertyChanged}"
                  Watermark="e.g., Project Assets"/>
       </StackPanel>
 
@@ -70,7 +70,7 @@
                         Margin="10,0,0,0"
                         Command="{Binding DataContext.RemoveSubfolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                         CommandParameter="{Binding}"/>
-                <TextBox Text="{Binding Name}"
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                          Watermark="Subfolder name"/>
               </DockPanel>
             </DataTemplate>

@@ -59,6 +59,13 @@ public partial class MainWindowViewModel : ObservableObject
 
     partial void OnMainFolderNameChanged(string? value)
     {
+        var sanitizedName = NameSanitizer.SanitizeFolderName(value);
+        if (value != sanitizedName)
+        {
+            MainFolderName = sanitizedName;
+            return;
+        }
+
         UpdateCanCreate();
         UpdatePreview();
     }
