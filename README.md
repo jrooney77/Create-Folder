@@ -14,6 +14,11 @@ This repository currently contains two app entry points:
 - Clear success/error messaging
 - Live preview of the final root path and each folder path to be created
 - Cross-platform UI built with Avalonia (desktop project)
+- Direction 2 visual foundation for the UI:
+  - Frosted/glass window treatment with a glass surface container
+  - Typography hierarchy resources (`TextBlock.title`, `TextBlock.section`, `TextBlock.label`)
+  - Refined button classes (`primary`, `ghost`, `danger`) with hover lift + smooth transitions
+  - Shared visual resources for `GlassSurface`, `CardBg`, `CardBgDark`, and `TextMuted`
 - Persists the last selected base directory between app launches (UI app)
 - Optional `Open Folder` action after successful creation (macOS `open`, Windows `explorer`, Linux `xdg-open`)
 - Keyboard shortcuts in UI:

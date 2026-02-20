@@ -8,7 +8,8 @@
         x:Class="FolderCreator.Ui.Views.MainWindow"
         Title="Create Folder"
         Width="720" Height="520"
-        Background="{DynamicResource AppBg}"
+        TransparencyLevelHint="AcrylicBlur,Mica,Transparent"
+        Background="Transparent"
         Foreground="{DynamicResource AppFg}">
   <Window.KeyBindings>
     <KeyBinding Gesture="Enter"
@@ -22,15 +23,21 @@
   </Design.DataContext>
 
   <ScrollViewer>
-    <StackPanel Margin="28" Spacing="18">
+    <Border Margin="18"
+            Padding="22"
+            CornerRadius="18"
+            Background="{DynamicResource GlassSurface}"
+            BorderBrush="#66FFFFFF"
+            BorderThickness="1"
+            BoxShadow="0 18 40 -24 #CC000000">
+      <StackPanel Spacing="18">
 
       <TextBlock Text="Create Folder Tool"
-                 FontSize="26"
-                 FontWeight="SemiBold"/>
+                 Classes="title"/>
 
       <!-- Base Directory -->
       <StackPanel Spacing="8">
-        <TextBlock Text="Base Directory" Opacity="0.85"/>
+        <TextBlock Text="Base Directory" Classes="label"/>
         <DockPanel LastChildFill="True">
           <Button DockPanel.Dock="Right"
                   Content="Browse…"
@@ -45,7 +52,7 @@
 
       <!-- Main Folder -->
       <StackPanel Spacing="8">
-        <TextBlock Text="Primary Folder Name" Opacity="0.85"/>
+        <TextBlock Text="Primary Folder Name" Classes="label"/>
         <TextBox Text="{Binding MainFolderName, UpdateSourceTrigger=PropertyChanged}"
                  Watermark="e.g., Project Assets"/>
       </StackPanel>
@@ -53,7 +60,7 @@
       <!-- Subfolders -->
       <StackPanel Spacing="10">
         <DockPanel LastChildFill="True">
-          <TextBlock Text="Subfolders" FontSize="16" FontWeight="SemiBold"/>
+          <TextBlock Text="Subfolders" Classes="section"/>
           <Button DockPanel.Dock="Right"
                   Content="+ Add Subfolder"
                   Command="{Binding AddSubfolderCommand}"
@@ -80,7 +87,7 @@
 
       <!-- Preview -->
       <StackPanel Spacing="8">
-        <TextBlock Text="Preview" FontSize="16" FontWeight="SemiBold"/>
+        <TextBlock Text="Preview" Classes="section"/>
         <Border CornerRadius="10"
                 Padding="12"
                 BorderBrush="#3A4A59"
@@ -88,13 +95,13 @@
           <StackPanel Spacing="8">
             <TextBlock Text="Root path"
                        FontWeight="SemiBold"
-                       Opacity="0.85"/>
+                       Classes="label"/>
             <TextBlock Text="{Binding PreviewRootPath}"
                        TextWrapping="Wrap"/>
             <TextBlock Text="Folders to create"
                        FontWeight="SemiBold"
                        Margin="0,6,0,0"
-                       Opacity="0.85"/>
+                       Classes="label"/>
             <ItemsControl ItemsSource="{Binding PreviewItems}">
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -132,6 +139,7 @@
                 Height="40"/>
       </DockPanel>
 
-    </StackPanel>
+      </StackPanel>
+    </Border>
   </ScrollViewer>
 </Window>

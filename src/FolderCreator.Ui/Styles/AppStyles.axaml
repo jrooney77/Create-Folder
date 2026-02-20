@@ -2,59 +2,143 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Styles.Resources>
-    <!-- Palette -->
-    <Color x:Key="C_AppBg">#0F1C2E</Color>
-    <Color x:Key="C_Panel">#1B2A41</Color>
-    <Color x:Key="C_Accent">#2E4A7D</Color>
-    <Color x:Key="C_AccentHover">#3A5F9E</Color>
-    <Color x:Key="C_Text">#FFFFFF</Color>
-    <Color x:Key="C_Danger">#B04A4A</Color>
+    <!-- Direction 2 foundation palette -->
+    <Color x:Key="C_AppBg">#081220</Color>
+    <Color x:Key="C_Panel">#1A2A43</Color>
+    <Color x:Key="C_Card">#2A3D5E66</Color>
+    <Color x:Key="C_CardDark">#1A2A4388</Color>
+    <Color x:Key="C_Text">#F4F8FF</Color>
+    <Color x:Key="C_TextMuted">#B2C2D6</Color>
+    <Color x:Key="C_Accent">#5D9CFF</Color>
+    <Color x:Key="C_AccentHover">#79B0FF</Color>
+    <Color x:Key="C_GhostBorder">#5F7FA440</Color>
+    <Color x:Key="C_Danger">#D26A6A</Color>
+    <Color x:Key="C_DangerHover">#E17C7C</Color>
     <Color x:Key="C_Success">#2D6A4F</Color>
 
-    <SolidColorBrush x:Key="AppBg" Color="{DynamicResource C_AppBg}"/>
+    <LinearGradientBrush x:Key="AppBg" StartPoint="0,0" EndPoint="1,1">
+      <GradientStop Offset="0" Color="#081220"/>
+      <GradientStop Offset="1" Color="#12243C"/>
+    </LinearGradientBrush>
+
     <SolidColorBrush x:Key="PanelBg" Color="{DynamicResource C_Panel}"/>
+    <SolidColorBrush x:Key="CardBg" Color="{DynamicResource C_Card}"/>
+    <SolidColorBrush x:Key="CardBgDark" Color="{DynamicResource C_CardDark}"/>
     <SolidColorBrush x:Key="AppFg" Color="{DynamicResource C_Text}"/>
+    <SolidColorBrush x:Key="TextMuted" Color="{DynamicResource C_TextMuted}"/>
     <SolidColorBrush x:Key="Accent" Color="{DynamicResource C_Accent}"/>
     <SolidColorBrush x:Key="AccentHover" Color="{DynamicResource C_AccentHover}"/>
+    <SolidColorBrush x:Key="GhostBorder" Color="{DynamicResource C_GhostBorder}"/>
     <SolidColorBrush x:Key="Danger" Color="{DynamicResource C_Danger}"/>
+    <SolidColorBrush x:Key="DangerHover" Color="{DynamicResource C_DangerHover}"/>
     <SolidColorBrush x:Key="Success" Color="{DynamicResource C_Success}"/>
+
+    <LinearGradientBrush x:Key="GlassSurface" StartPoint="0,0" EndPoint="1,1">
+      <GradientStop Offset="0" Color="#80FFFFFF"/>
+      <GradientStop Offset="1" Color="#33B9D7FF"/>
+    </LinearGradientBrush>
   </Styles.Resources>
 
-  <!-- TextBox styling -->
+  <!-- Typography hierarchy -->
+  <Style Selector="TextBlock.title">
+    <Setter Property="FontSize" Value="28"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+  </Style>
+
+  <Style Selector="TextBlock.section">
+    <Setter Property="FontSize" Value="17"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+  </Style>
+
+  <Style Selector="TextBlock.label">
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="Foreground" Value="{DynamicResource TextMuted}"/>
+  </Style>
+
+  <!-- Input styling -->
   <Style Selector="TextBox">
-    <Setter Property="Background" Value="{DynamicResource PanelBg}"/>
-    <Setter Property="BorderBrush" Value="#2A3A55"/>
+    <Setter Property="Background" Value="#2A3D5E66"/>
+    <Setter Property="BorderBrush" Value="#6A89AE55"/>
     <Setter Property="BorderThickness" Value="1"/>
-    <Setter Property="CornerRadius" Value="10"/>
-    <Setter Property="Padding" Value="10,8"/>
-    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="CornerRadius" Value="12"/>
+    <Setter Property="Padding" Value="12,9"/>
+    <Setter Property="FontSize" Value="15"/>
+    <Setter Property="Foreground" Value="{DynamicResource AppFg}"/>
   </Style>
 
   <!-- Buttons -->
   <Style Selector="Button">
-    <Setter Property="CornerRadius" Value="10"/>
-    <Setter Property="Padding" Value="14,8"/>
+    <Setter Property="CornerRadius" Value="12"/>
+    <Setter Property="Padding" Value="14,9"/>
     <Setter Property="FontSize" Value="14"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+    <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+    <Setter Property="RenderTransform" Value="scale(1)"/>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border x:Name="RootBorder"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}">
+          <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"/>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Setter Property="Transitions">
+      <Transitions>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.16"/>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.16"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="Button:pointerover">
+    <Setter Property="RenderTransform" Value="scale(1.02)"/>
+    <Setter Property="Opacity" Value="0.98"/>
+  </Style>
+
+  <Style Selector="Button /template/ Border#RootBorder">
+    <Setter Property="BoxShadow" Value="0 6 16 -10 #CC000000"/>
+  </Style>
+
+  <Style Selector="Button:pointerover /template/ Border#RootBorder">
+    <Setter Property="BoxShadow" Value="0 14 28 -14 #CC000000"/>
   </Style>
 
   <Style Selector="Button.primary">
     <Setter Property="Background" Value="{DynamicResource Accent}"/>
     <Setter Property="Foreground" Value="{DynamicResource AppFg}"/>
+    <Setter Property="BorderBrush" Value="#A2C8FF55"/>
+    <Setter Property="BorderThickness" Value="1"/>
   </Style>
 
   <Style Selector="Button.primary:pointerover">
     <Setter Property="Background" Value="{DynamicResource AccentHover}"/>
+    <Setter Property="Opacity" Value="1"/>
   </Style>
 
   <Style Selector="Button.ghost">
-    <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="BorderBrush" Value="#2A3A55"/>
+    <Setter Property="Background" Value="#20FFFFFF"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource GhostBorder}"/>
     <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Foreground" Value="{DynamicResource AppFg}"/>
   </Style>
 
   <Style Selector="Button.danger">
     <Setter Property="Background" Value="{DynamicResource Danger}"/>
     <Setter Property="Foreground" Value="{DynamicResource AppFg}"/>
+    <Setter Property="BorderBrush" Value="#F1B0B055"/>
+    <Setter Property="BorderThickness" Value="1"/>
+  </Style>
+
+  <Style Selector="Button.danger:pointerover">
+    <Setter Property="Background" Value="{DynamicResource DangerHover}"/>
   </Style>
 
 </Styles>
