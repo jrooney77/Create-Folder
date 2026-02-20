@@ -13,6 +13,7 @@ This repository currently contains two app entry points:
 - Clear success/error messaging
 - Live preview of the final root path and each folder path to be created
 - Cross-platform UI built with Avalonia (desktop project)
+- Persists the last selected base directory between app launches (UI app)
 
 ## Tech Stack
 
@@ -99,6 +100,9 @@ dotnet build src/FolderCreator.Ui/FolderCreator.Ui.csproj
 
 - The solution file currently references the root console project.
 - The UI project can still be built/run directly with `--project` commands above.
+- UI settings are saved to app data as `FolderCreator/settings.json`:
+  - macOS/Linux: `Environment.SpecialFolder.ApplicationData`
+  - Stored field: `LastBaseDirectory` (restored on startup if the directory still exists)
 
 ## License
 
