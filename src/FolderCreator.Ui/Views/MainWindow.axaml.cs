@@ -6,9 +6,12 @@ namespace FolderCreator.Ui.Views;
 
 public partial class MainWindow : Window
 {
+    private bool _hasInitializedViewModel;
+
     public MainWindow()
     {
         InitializeComponent();
+        DataContextChanged += (_, _) => TryInitializeViewModel();
     }
 
     private async void BrowseBaseDirectory_Click(object? sender, RoutedEventArgs e)
@@ -29,5 +32,17 @@ public partial class MainWindow : Window
         {
             vm.BaseDirectory = folder.Path.LocalPath;
         }
+    }
+
+    private void TryInitializeViewModel()
+    {
+        if (_hasInitializedViewModel)
+            return;
+
+        if (DataContext is not MainWindowViewModel vm)
+            return;
+
+        _hasInitializedViewModel = true;
+        _ = vm.InitializeAsync();
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.Collections.ObjectModel;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FolderCreator.Ui.Models;
 using FolderCreator.Ui.Services;
 
 namespace FolderCreator.Ui.ViewModels;
@@ -12,6 +14,7 @@ namespace FolderCreator.Ui.ViewModels;
 public partial class MainWindowViewModel : ObservableObject
 {
     private readonly FolderCreatorService _service = new();
+    private readonly AppSettingsService _appSettingsService = new();
 
     [ObservableProperty]
     private string? baseDirectory;
@@ -44,6 +47,12 @@ public partial class MainWindowViewModel : ObservableObject
     {
         UpdateCanCreate();
         UpdatePreview();
+
+        var trimmedValue = (value ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(trimmedValue))
+            return;
+
+        _ = SaveLastBaseDirectoryAsync(trimmedValue);
     }
 
     partial void OnMainFolderNameChanged(string? value)
@@ -55,6 +64,15 @@ public partial class MainWindowViewModel : ObservableObject
     private void UpdateCanCreate()
     {
         CreateCommand.NotifyCanExecuteChanged();
+    }
+
+    public async Task InitializeAsync()
+    {
+        var settings = await _appSettingsService.LoadAsync();
+        var lastBaseDirectory = (settings.LastBaseDirectory ?? string.Empty).Trim();
+
+        if (!string.IsNullOrWhiteSpace(lastBaseDirectory) && Directory.Exists(lastBaseDirectory))
+            BaseDirectory = lastBaseDirectory;
     }
 
     [RelayCommand]
@@ -69,10 +87,10 @@ public partial class MainWindowViewModel : ObservableObject
     {
         if (Subfolders.Contains(item))
             RemoveSubfolderItem(item);
-        
+
         if (Subfolders.Count == 0)
             AddSubfolderItem(new SubfolderItemViewModel());
-        
+
         UpdateCanCreate();
     }
 
@@ -136,6 +154,25 @@ public partial class MainWindowViewModel : ObservableObject
                      .Where(n => !string.IsNullOrWhiteSpace(n)))
         {
             PreviewItems.Add(Path.Combine(rootPath, subfolderName));
+        }
+    }
+
+    private async Task SaveLastBaseDirectoryAsync(string baseDirectoryPath)
+    {
+        try
+        {
+            await _appSettingsService.SaveAsync(new AppSettings
+            {
+                LastBaseDirectory = baseDirectoryPath
+            });
+        }
+        catch (IOException)
+        {
+            // Ignore settings save errors to avoid interrupting the core workflow.
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // Ignore settings save errors to avoid interrupting the core workflow.
         }
     }
 }
