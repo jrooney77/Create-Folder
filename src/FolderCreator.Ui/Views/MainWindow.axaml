@@ -10,6 +10,12 @@
         Width="720" Height="520"
         Background="{DynamicResource AppBg}"
         Foreground="{DynamicResource AppFg}">
+  <Window.KeyBindings>
+    <KeyBinding Gesture="Enter"
+                Command="{Binding CreateCommand}"/>
+    <KeyBinding Gesture="Meta+O"
+                Command="{Binding BrowseBaseDirectoryCommand}"/>
+  </Window.KeyBindings>
 
   <Design.DataContext>
     <vm:MainWindowViewModel/>
@@ -30,7 +36,7 @@
                   Content="Browse…"
                   Classes="primary"
                   Margin="10,0,0,0"
-                  Click="BrowseBaseDirectory_Click"/>
+                  Command="{Binding BrowseBaseDirectoryCommand}"/>
           <TextBox Text="{Binding BaseDirectory}"
                    IsReadOnly="True"
                    Watermark="Select a folder…"/>
