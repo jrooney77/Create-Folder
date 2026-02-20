@@ -1,0 +1,60 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Styles.Resources>
+    <!-- Palette -->
+    <Color x:Key="C_AppBg">#0F1C2E</Color>
+    <Color x:Key="C_Panel">#1B2A41</Color>
+    <Color x:Key="C_Accent">#2E4A7D</Color>
+    <Color x:Key="C_AccentHover">#3A5F9E</Color>
+    <Color x:Key="C_Text">#FFFFFF</Color>
+    <Color x:Key="C_Danger">#B04A4A</Color>
+    <Color x:Key="C_Success">#2D6A4F</Color>
+
+    <SolidColorBrush x:Key="AppBg" Color="{DynamicResource C_AppBg}"/>
+    <SolidColorBrush x:Key="PanelBg" Color="{DynamicResource C_Panel}"/>
+    <SolidColorBrush x:Key="AppFg" Color="{DynamicResource C_Text}"/>
+    <SolidColorBrush x:Key="Accent" Color="{DynamicResource C_Accent}"/>
+    <SolidColorBrush x:Key="AccentHover" Color="{DynamicResource C_AccentHover}"/>
+    <SolidColorBrush x:Key="Danger" Color="{DynamicResource C_Danger}"/>
+    <SolidColorBrush x:Key="Success" Color="{DynamicResource C_Success}"/>
+  </Styles.Resources>
+
+  <!-- TextBox styling -->
+  <Style Selector="TextBox">
+    <Setter Property="Background" Value="{DynamicResource PanelBg}"/>
+    <Setter Property="BorderBrush" Value="#2A3A55"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="CornerRadius" Value="10"/>
+    <Setter Property="Padding" Value="10,8"/>
+    <Setter Property="FontSize" Value="14"/>
+  </Style>
+
+  <!-- Buttons -->
+  <Style Selector="Button">
+    <Setter Property="CornerRadius" Value="10"/>
+    <Setter Property="Padding" Value="14,8"/>
+    <Setter Property="FontSize" Value="14"/>
+  </Style>
+
+  <Style Selector="Button.primary">
+    <Setter Property="Background" Value="{DynamicResource Accent}"/>
+    <Setter Property="Foreground" Value="{DynamicResource AppFg}"/>
+  </Style>
+
+  <Style Selector="Button.primary:pointerover">
+    <Setter Property="Background" Value="{DynamicResource AccentHover}"/>
+  </Style>
+
+  <Style Selector="Button.ghost">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="#2A3A55"/>
+    <Setter Property="BorderThickness" Value="1"/>
+  </Style>
+
+  <Style Selector="Button.danger">
+    <Setter Property="Background" Value="{DynamicResource Danger}"/>
+    <Setter Property="Foreground" Value="{DynamicResource AppFg}"/>
+  </Style>
+
+</Styles>

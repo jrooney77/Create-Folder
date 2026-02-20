@@ -1,0 +1,95 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:FolderCreator.Ui.ViewModels"
+        xmlns:conv="clr-namespace:FolderCreator.Ui.Converters"
+        mc:Ignorable="d"
+        x:Class="FolderCreator.Ui.Views.MainWindow"
+        Title="Create Folder"
+        Width="720" Height="520"
+        Background="{DynamicResource AppBg}"
+        Foreground="{DynamicResource AppFg}">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <ScrollViewer>
+    <StackPanel Margin="28" Spacing="18">
+
+      <TextBlock Text="Create Folder Tool"
+                 FontSize="26"
+                 FontWeight="SemiBold"/>
+
+      <!-- Base Directory -->
+      <StackPanel Spacing="8">
+        <TextBlock Text="Base Directory" Opacity="0.85"/>
+        <DockPanel LastChildFill="True">
+          <Button DockPanel.Dock="Right"
+                  Content="Browse…"
+                  Classes="primary"
+                  Margin="10,0,0,0"
+                  Click="BrowseBaseDirectory_Click"/>
+          <TextBox Text="{Binding BaseDirectory}"
+                   IsReadOnly="True"
+                   Watermark="Select a folder…"/>
+        </DockPanel>
+      </StackPanel>
+
+      <!-- Main Folder -->
+      <StackPanel Spacing="8">
+        <TextBlock Text="Primary Folder Name" Opacity="0.85"/>
+        <TextBox Text="{Binding MainFolderName}"
+                 Watermark="e.g., Project Assets"/>
+      </StackPanel>
+
+      <!-- Subfolders -->
+      <StackPanel Spacing="10">
+        <DockPanel LastChildFill="True">
+          <TextBlock Text="Subfolders" FontSize="16" FontWeight="SemiBold"/>
+          <Button DockPanel.Dock="Right"
+                  Content="+ Add Subfolder"
+                  Command="{Binding AddSubfolderCommand}"
+                  Classes="ghost"/>
+        </DockPanel>
+
+        <ItemsControl ItemsSource="{Binding Subfolders}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button DockPanel.Dock="Right"
+                        Content="Remove"
+                        Classes="danger"
+                        Margin="10,0,0,0"
+                        Command="{Binding DataContext.RemoveSubfolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="{Binding}"/>
+                <TextBox Text="{Binding Name}"
+                         Watermark="Subfolder name"/>
+              </DockPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+
+      <!-- Status -->
+      <Border IsVisible="{Binding StatusMessage, Converter={x:Static conv:StringConverters.NotNullOrEmpty}}"
+              Background="{Binding IsSuccess, Converter={x:Static conv:BoolConverters.SuccessToBg}}"
+              CornerRadius="10"
+              Padding="12">
+        <TextBlock Text="{Binding StatusMessage}"/>
+      </Border>
+
+      <!-- Create -->
+      <DockPanel>
+        <Button DockPanel.Dock="Right"
+                Content="Create Folders"
+                Command="{Binding CreateCommand}"
+                Classes="primary"
+                Width="160"
+                Height="40"/>
+      </DockPanel>
+
+    </StackPanel>
+  </ScrollViewer>
+</Window>

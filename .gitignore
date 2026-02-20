@@ -23,3 +23,6 @@ obj/
 
 # dotenv / secrets
 .env
+
+# Rider/JetBrains (if I ever use it)
+.idea/
