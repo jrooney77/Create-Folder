@@ -16,6 +16,9 @@ This repository currently contains two app entry points:
 - Cross-platform UI built with Avalonia (desktop project)
 - Direction 2 visual foundation for the UI:
   - Frosted/glass window treatment with a glass surface container
+  - Glass-card layout for all major sections (Base Directory, Primary Folder Name, Subfolders, Preview, Create/Open actions)
+  - Left accent stripe treatment on cards using shared `Accent` brush
+  - Icon-chip section headers for faster visual scanning (📂 📁 ➕ 👁 🚀)
   - Typography hierarchy resources (`TextBlock.title`, `TextBlock.section`, `TextBlock.label`)
   - Refined button classes (`primary`, `ghost`, `danger`) with hover lift + smooth transitions
   - Shared visual resources for `GlassSurface`, `CardBg`, `CardBgDark`, and `TextMuted`

@@ -30,89 +30,171 @@
             BorderBrush="#66FFFFFF"
             BorderThickness="1"
             BoxShadow="0 18 40 -24 #CC000000">
-      <StackPanel Spacing="18">
+      <StackPanel Spacing="16">
 
       <TextBlock Text="Create Folder Tool"
                  Classes="title"/>
 
       <!-- Base Directory -->
-      <StackPanel Spacing="8">
-        <TextBlock Text="Base Directory" Classes="label"/>
-        <DockPanel LastChildFill="True">
-          <Button DockPanel.Dock="Right"
-                  Content="Browse…"
-                  Classes="primary"
-                  Margin="10,0,0,0"
-                  Command="{Binding BrowseBaseDirectoryCommand}"/>
-          <TextBox Text="{Binding BaseDirectory}"
-                   IsReadOnly="True"
-                   Watermark="Select a folder…"/>
-        </DockPanel>
-      </StackPanel>
+      <Border Background="{DynamicResource CardBg}"
+              CornerRadius="16"
+              BoxShadow="0 10 26 -20 #B0000000">
+        <Grid ColumnDefinitions="4,*">
+          <Border Background="{DynamicResource Accent}"
+                  CornerRadius="16,0,0,16"/>
+          <StackPanel Grid.Column="1"
+                      Margin="16"
+                      Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Border Width="30"
+                      Height="30"
+                      CornerRadius="10"
+                      Background="#26FFFFFF">
+                <TextBlock Text="📂"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Text="Base Directory" Classes="section"/>
+            </StackPanel>
+            <TextBlock Text="Choose where the new folder structure will be created."
+                       Classes="label"/>
+            <DockPanel LastChildFill="True">
+              <Button DockPanel.Dock="Right"
+                      Content="Browse…"
+                      Classes="primary"
+                      Margin="10,0,0,0"
+                      Command="{Binding BrowseBaseDirectoryCommand}"/>
+              <TextBox Text="{Binding BaseDirectory}"
+                       IsReadOnly="True"
+                       Watermark="Select a folder…"/>
+            </DockPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
 
       <!-- Main Folder -->
-      <StackPanel Spacing="8">
-        <TextBlock Text="Primary Folder Name" Classes="label"/>
-        <TextBox Text="{Binding MainFolderName, UpdateSourceTrigger=PropertyChanged}"
-                 Watermark="e.g., Project Assets"/>
-      </StackPanel>
+      <Border Background="{DynamicResource CardBg}"
+              CornerRadius="16"
+              BoxShadow="0 10 26 -20 #B0000000">
+        <Grid ColumnDefinitions="4,*">
+          <Border Background="{DynamicResource Accent}"
+                  CornerRadius="16,0,0,16"/>
+          <StackPanel Grid.Column="1"
+                      Margin="16"
+                      Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Border Width="30"
+                      Height="30"
+                      CornerRadius="10"
+                      Background="#26FFFFFF">
+                <TextBlock Text="📁"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Text="Primary Folder Name" Classes="section"/>
+            </StackPanel>
+            <TextBlock Text="Name of the root folder to create."
+                       Classes="label"/>
+            <TextBox Text="{Binding MainFolderName, UpdateSourceTrigger=PropertyChanged}"
+                     Watermark="e.g., Project Assets"/>
+          </StackPanel>
+        </Grid>
+      </Border>
 
       <!-- Subfolders -->
-      <StackPanel Spacing="10">
-        <DockPanel LastChildFill="True">
-          <TextBlock Text="Subfolders" Classes="section"/>
-          <Button DockPanel.Dock="Right"
-                  Content="+ Add Subfolder"
-                  Command="{Binding AddSubfolderCommand}"
-                  Classes="ghost"/>
-        </DockPanel>
-
-        <ItemsControl ItemsSource="{Binding Subfolders}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <DockPanel>
-                <Button DockPanel.Dock="Right"
-                        Content="Remove"
-                        Classes="danger"
-                        Margin="10,0,0,0"
-                        Command="{Binding DataContext.RemoveSubfolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding}"/>
-                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                         Watermark="Subfolder name"/>
-              </DockPanel>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </StackPanel>
-
-      <!-- Preview -->
-      <StackPanel Spacing="8">
-        <TextBlock Text="Preview" Classes="section"/>
-        <Border CornerRadius="10"
-                Padding="12"
-                BorderBrush="#3A4A59"
-                BorderThickness="1">
-          <StackPanel Spacing="8">
-            <TextBlock Text="Root path"
-                       FontWeight="SemiBold"
+      <Border Background="{DynamicResource CardBg}"
+              CornerRadius="16"
+              BoxShadow="0 10 26 -20 #B0000000">
+        <Grid ColumnDefinitions="4,*">
+          <Border Background="{DynamicResource Accent}"
+                  CornerRadius="16,0,0,16"/>
+          <StackPanel Grid.Column="1"
+                      Margin="16"
+                      Spacing="12">
+            <DockPanel LastChildFill="True">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Border Width="30"
+                        Height="30"
+                        CornerRadius="10"
+                        Background="#26FFFFFF">
+                  <TextBlock Text="➕"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Subfolders" Classes="section"/>
+              </StackPanel>
+              <Button DockPanel.Dock="Right"
+                      Content="+ Add Subfolder"
+                      Command="{Binding AddSubfolderCommand}"
+                      Classes="ghost"/>
+            </DockPanel>
+            <TextBlock Text="Add optional folders created under the primary folder."
                        Classes="label"/>
-            <TextBlock Text="{Binding PreviewRootPath}"
-                       TextWrapping="Wrap"/>
-            <TextBlock Text="Folders to create"
-                       FontWeight="SemiBold"
-                       Margin="0,6,0,0"
-                       Classes="label"/>
-            <ItemsControl ItemsSource="{Binding PreviewItems}">
+            <ItemsControl ItemsSource="{Binding Subfolders}">
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding .}"
-                             TextWrapping="Wrap"/>
+                  <DockPanel Margin="0,0,0,8">
+                    <Button DockPanel.Dock="Right"
+                            Content="Remove"
+                            Classes="danger"
+                            Margin="10,0,0,0"
+                            Command="{Binding DataContext.RemoveSubfolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{Binding}"/>
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                             Watermark="Subfolder name"/>
+                  </DockPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </StackPanel>
-        </Border>
-      </StackPanel>
+        </Grid>
+      </Border>
+
+      <!-- Preview -->
+      <Border Background="{DynamicResource CardBgDark}"
+              CornerRadius="16"
+              BoxShadow="0 10 26 -20 #B0000000">
+        <Grid ColumnDefinitions="4,*">
+          <Border Background="{DynamicResource Accent}"
+                  CornerRadius="16,0,0,16"/>
+          <StackPanel Grid.Column="1"
+                      Margin="16"
+                      Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Border Width="30"
+                      Height="30"
+                      CornerRadius="10"
+                      Background="#26FFFFFF">
+                <TextBlock Text="👁"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Text="Preview" Classes="section"/>
+            </StackPanel>
+            <TextBlock Text="Review the final paths before creating anything."
+                       Classes="label"/>
+            <StackPanel Spacing="10">
+              <TextBlock Text="Root path"
+                         FontWeight="SemiBold"
+                         Classes="label"/>
+              <TextBlock Text="{Binding PreviewRootPath}"
+                         TextWrapping="Wrap"/>
+              <TextBlock Text="Folders to create"
+                         FontWeight="SemiBold"
+                         Margin="0,4,0,0"
+                         Classes="label"/>
+              <ItemsControl ItemsSource="{Binding PreviewItems}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding .}"
+                               TextWrapping="Wrap"/>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
 
       <!-- Status -->
       <Border IsVisible="{Binding StatusMessage, Converter={x:Static conv:StringConverters.NotNullOrEmpty}}"
@@ -123,21 +205,46 @@
       </Border>
 
       <!-- Create -->
-      <DockPanel>
-        <Button DockPanel.Dock="Right"
-                Content="Create Folders"
-                Command="{Binding CreateCommand}"
-                Classes="primary"
-                Width="160"
-                Height="40"/>
-        <Button DockPanel.Dock="Right"
-                Content="Open Folder"
-                Command="{Binding OpenLastCreatedCommand}"
-                Classes="ghost"
-                Margin="0,0,10,0"
-                Width="130"
-                Height="40"/>
-      </DockPanel>
+      <Border Background="{DynamicResource CardBg}"
+              CornerRadius="16"
+              BoxShadow="0 10 26 -20 #B0000000">
+        <Grid ColumnDefinitions="4,*">
+          <Border Background="{DynamicResource Accent}"
+                  CornerRadius="16,0,0,16"/>
+          <StackPanel Grid.Column="1"
+                      Margin="16"
+                      Spacing="14">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Border Width="30"
+                      Height="30"
+                      CornerRadius="10"
+                      Background="#26FFFFFF">
+                <TextBlock Text="🚀"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Text="Create" Classes="section"/>
+            </StackPanel>
+            <TextBlock Text="Create the folder structure, then optionally open it."
+                       Classes="label"/>
+            <DockPanel>
+              <Button DockPanel.Dock="Right"
+                      Content="Create Folders"
+                      Command="{Binding CreateCommand}"
+                      Classes="primary"
+                      Width="160"
+                      Height="40"/>
+              <Button DockPanel.Dock="Right"
+                      Content="Open Folder"
+                      Command="{Binding OpenLastCreatedCommand}"
+                      Classes="ghost"
+                      Margin="0,0,10,0"
+                      Width="130"
+                      Height="40"/>
+            </DockPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
 
       </StackPanel>
     </Border>
