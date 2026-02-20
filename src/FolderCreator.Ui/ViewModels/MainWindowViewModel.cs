@@ -16,6 +16,8 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly FolderCreatorService _service = new();
     private readonly AppSettingsService _appSettingsService = new();
 
+    public Func<Task<string?>>? PickFolderAsync { get; set; }
+
     [ObservableProperty]
     private string? baseDirectory;
 
@@ -105,6 +107,17 @@ public partial class MainWindowViewModel : ObservableObject
 
         StatusMessage = result.Message;
         IsSuccess = result.Success;
+    }
+
+    [RelayCommand]
+    private async Task BrowseBaseDirectoryAsync()
+    {
+        if (PickFolderAsync is null)
+            return;
+
+        var pickedDirectory = await PickFolderAsync();
+        if (!string.IsNullOrWhiteSpace(pickedDirectory))
+            BaseDirectory = pickedDirectory;
     }
 
     private bool CanCreate()

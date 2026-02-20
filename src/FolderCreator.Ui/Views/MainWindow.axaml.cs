@@ -1,5 +1,5 @@
+using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using FolderCreator.Ui.ViewModels;
 
 namespace FolderCreator.Ui.Views;
@@ -14,10 +14,11 @@ public partial class MainWindow : Window
         DataContextChanged += (_, _) => TryInitializeViewModel();
     }
 
-    private async void BrowseBaseDirectory_Click(object? sender, RoutedEventArgs e)
+    private async Task<string?> PickBaseDirectoryAsync()
     {
         var topLevel = TopLevel.GetTopLevel(this);
-        if (topLevel is null) return;
+        if (topLevel is null)
+            return null;
 
         var picker = await topLevel.StorageProvider.OpenFolderPickerAsync(new()
         {
@@ -26,20 +27,17 @@ public partial class MainWindow : Window
         });
 
         var folder = picker.Count > 0 ? picker[0] : null;
-        if (folder is null) return;
-
-        if (DataContext is MainWindowViewModel vm)
-        {
-            vm.BaseDirectory = folder.Path.LocalPath;
-        }
+        return folder?.Path.LocalPath;
     }
 
     private void TryInitializeViewModel()
     {
-        if (_hasInitializedViewModel)
+        if (DataContext is not MainWindowViewModel vm)
             return;
 
-        if (DataContext is not MainWindowViewModel vm)
+        vm.PickFolderAsync = PickBaseDirectoryAsync;
+
+        if (_hasInitializedViewModel)
             return;
 
         _hasInitializedViewModel = true;
