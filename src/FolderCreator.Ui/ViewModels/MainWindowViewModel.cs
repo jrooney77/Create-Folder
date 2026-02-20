@@ -14,6 +14,7 @@ namespace FolderCreator.Ui.ViewModels;
 public partial class MainWindowViewModel : ObservableObject
 {
     private readonly FolderCreatorService _service = new();
+    private readonly FolderOpener _folderOpener = new();
     private readonly AppSettingsService _appSettingsService = new();
 
     public Func<Task<string?>>? PickFolderAsync { get; set; }
@@ -36,6 +37,9 @@ public partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty]
     private bool isSuccess;
+
+    [ObservableProperty]
+    private string? lastCreatedPath;
 
     public MainWindowViewModel()
     {
@@ -68,6 +72,11 @@ public partial class MainWindowViewModel : ObservableObject
 
         UpdateCanCreate();
         UpdatePreview();
+    }
+
+    partial void OnLastCreatedPathChanged(string? value)
+    {
+        OpenLastCreatedCommand.NotifyCanExecuteChanged();
     }
 
     private void UpdateCanCreate()
@@ -106,12 +115,30 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanCreate))]
     private void Create()
     {
+        var baseDirectory = (BaseDirectory ?? string.Empty).Trim();
+        var mainFolderName = (MainFolderName ?? string.Empty).Trim();
+        var rootPath = Path.Combine(baseDirectory, mainFolderName);
+
         var result = _service.Create(
-            baseDirectory: BaseDirectory ?? "",
-            mainFolderName: (MainFolderName ?? "").Trim(),
+            baseDirectory: baseDirectory,
+            mainFolderName: mainFolderName,
             subfolderNames: Subfolders.Select(s => s.Name ?? "")
         );
 
+        StatusMessage = result.Message;
+        IsSuccess = result.Success;
+
+        if (result.Success)
+            LastCreatedPath = rootPath;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanOpenLastCreated))]
+    private void OpenLastCreated()
+    {
+        if (string.IsNullOrWhiteSpace(LastCreatedPath))
+            return;
+
+        var result = _folderOpener.Open(LastCreatedPath);
         StatusMessage = result.Message;
         IsSuccess = result.Success;
     }
@@ -130,6 +157,10 @@ public partial class MainWindowViewModel : ObservableObject
     private bool CanCreate()
         => !string.IsNullOrWhiteSpace(BaseDirectory)
             && !string.IsNullOrWhiteSpace(MainFolderName);
+
+    private bool CanOpenLastCreated()
+        => !string.IsNullOrWhiteSpace(LastCreatedPath)
+            && Directory.Exists(LastCreatedPath);
 
     private void AddSubfolderItem(SubfolderItemViewModel item)
     {

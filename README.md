@@ -15,6 +15,7 @@ This repository currently contains two app entry points:
 - Live preview of the final root path and each folder path to be created
 - Cross-platform UI built with Avalonia (desktop project)
 - Persists the last selected base directory between app launches (UI app)
+- Optional `Open Folder` action after successful creation (macOS `open`, Windows `explorer`, Linux `xdg-open`)
 - Keyboard shortcuts in UI:
   - `Enter` runs create
   - `Cmd+O` (macOS) opens folder picker
@@ -108,6 +109,7 @@ dotnet build src/FolderCreator.Ui/FolderCreator.Ui.csproj
   - macOS/Linux: `Environment.SpecialFolder.ApplicationData`
   - Stored field: `LastBaseDirectory` (restored on startup if the directory still exists)
 - In the Avalonia app, folder browsing is wired through MVVM (`BrowseBaseDirectoryCommand`) while folder picker UI stays in `MainWindow.axaml.cs` via a `PickFolderAsync` delegate on the view model.
+- `OpenLastCreatedCommand` is enabled only when `LastCreatedPath` is set and still exists on disk.
 
 ## License
 
