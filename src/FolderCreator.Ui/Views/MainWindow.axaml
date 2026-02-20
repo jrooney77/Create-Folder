@@ -72,6 +72,35 @@
         </ItemsControl>
       </StackPanel>
 
+      <!-- Preview -->
+      <StackPanel Spacing="8">
+        <TextBlock Text="Preview" FontSize="16" FontWeight="SemiBold"/>
+        <Border CornerRadius="10"
+                Padding="12"
+                BorderBrush="#3A4A59"
+                BorderThickness="1">
+          <StackPanel Spacing="8">
+            <TextBlock Text="Root path"
+                       FontWeight="SemiBold"
+                       Opacity="0.85"/>
+            <TextBlock Text="{Binding PreviewRootPath}"
+                       TextWrapping="Wrap"/>
+            <TextBlock Text="Folders to create"
+                       FontWeight="SemiBold"
+                       Margin="0,6,0,0"
+                       Opacity="0.85"/>
+            <ItemsControl ItemsSource="{Binding PreviewItems}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding .}"
+                             TextWrapping="Wrap"/>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+
       <!-- Status -->
       <Border IsVisible="{Binding StatusMessage, Converter={x:Static conv:StringConverters.NotNullOrEmpty}}"
               Background="{Binding IsSuccess, Converter={x:Static conv:BoolConverters.SuccessToBg}}"
