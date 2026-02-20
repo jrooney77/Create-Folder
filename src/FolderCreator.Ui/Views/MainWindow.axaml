@@ -123,6 +123,13 @@
                 Classes="primary"
                 Width="160"
                 Height="40"/>
+        <Button DockPanel.Dock="Right"
+                Content="Open Folder"
+                Command="{Binding OpenLastCreatedCommand}"
+                Classes="ghost"
+                Margin="0,0,10,0"
+                Width="130"
+                Height="40"/>
       </DockPanel>
 
     </StackPanel>
