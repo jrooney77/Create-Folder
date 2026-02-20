@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,6 +22,11 @@ public partial class MainWindowViewModel : ObservableObject
     public ObservableCollection<SubfolderItemViewModel> Subfolders { get; } = new();
 
     [ObservableProperty]
+    private string? previewRootPath;
+
+    public ObservableCollection<string> PreviewItems { get; } = new();
+
+    [ObservableProperty]
     private string? statusMessage;
 
     [ObservableProperty]
@@ -28,12 +35,22 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         // start with one row so it feels "ready"
-        Subfolders.Add(new SubfolderItemViewModel());
+        AddSubfolderItem(new SubfolderItemViewModel());
         UpdateCanCreate();
+        UpdatePreview();
     }
 
-    partial void OnBaseDirectoryChanged(string? value) => UpdateCanCreate();
-    partial void OnMainFolderNameChanged(string? value) => UpdateCanCreate();
+    partial void OnBaseDirectoryChanged(string? value)
+    {
+        UpdateCanCreate();
+        UpdatePreview();
+    }
+
+    partial void OnMainFolderNameChanged(string? value)
+    {
+        UpdateCanCreate();
+        UpdatePreview();
+    }
 
     private void UpdateCanCreate()
     {
@@ -43,7 +60,7 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private void AddSubfolder()
     {
-        Subfolders.Add(new SubfolderItemViewModel());
+        AddSubfolderItem(new SubfolderItemViewModel());
         UpdateCanCreate();
     }
 
@@ -51,10 +68,10 @@ public partial class MainWindowViewModel : ObservableObject
     private void RemoveSubfolder(SubfolderItemViewModel item)
     {
         if (Subfolders.Contains(item))
-            Subfolders.Remove(item);
+            RemoveSubfolderItem(item);
         
         if (Subfolders.Count == 0)
-            Subfolders.Add(new SubfolderItemViewModel());
+            AddSubfolderItem(new SubfolderItemViewModel());
         
         UpdateCanCreate();
     }
@@ -75,4 +92,50 @@ public partial class MainWindowViewModel : ObservableObject
     private bool CanCreate()
         => !string.IsNullOrWhiteSpace(BaseDirectory)
             && !string.IsNullOrWhiteSpace(MainFolderName);
+
+    private void AddSubfolderItem(SubfolderItemViewModel item)
+    {
+        item.PropertyChanged += OnSubfolderPropertyChanged;
+        Subfolders.Add(item);
+        UpdatePreview();
+    }
+
+    private void RemoveSubfolderItem(SubfolderItemViewModel item)
+    {
+        item.PropertyChanged -= OnSubfolderPropertyChanged;
+        Subfolders.Remove(item);
+        UpdatePreview();
+    }
+
+    private void OnSubfolderPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SubfolderItemViewModel.Name))
+            UpdatePreview();
+    }
+
+    private void UpdatePreview()
+    {
+        var basePath = (BaseDirectory ?? string.Empty).Trim();
+        var mainName = (MainFolderName ?? string.Empty).Trim();
+
+        if (string.IsNullOrWhiteSpace(basePath) || string.IsNullOrWhiteSpace(mainName))
+        {
+            PreviewRootPath = null;
+            PreviewItems.Clear();
+            return;
+        }
+
+        var rootPath = Path.Combine(basePath, mainName);
+        PreviewRootPath = rootPath;
+
+        PreviewItems.Clear();
+        PreviewItems.Add(rootPath);
+
+        foreach (var subfolderName in Subfolders
+                     .Select(s => (s.Name ?? string.Empty).Trim())
+                     .Where(n => !string.IsNullOrWhiteSpace(n)))
+        {
+            PreviewItems.Add(Path.Combine(rootPath, subfolderName));
+        }
+    }
 }

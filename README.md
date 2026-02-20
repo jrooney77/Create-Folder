@@ -11,6 +11,7 @@ This repository currently contains two app entry points:
 - Create a primary folder and multiple subfolders in one action
 - Basic validation for empty/invalid names
 - Clear success/error messaging
+- Live preview of the final root path and each folder path to be created
 - Cross-platform UI built with Avalonia (desktop project)
 
 ## Tech Stack
