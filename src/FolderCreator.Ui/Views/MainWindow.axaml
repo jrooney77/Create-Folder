@@ -173,34 +173,54 @@
             </StackPanel>
             <TextBlock Text="Review the final paths before creating anything."
                        Classes="label"/>
-            <StackPanel Spacing="10">
-              <TextBlock Text="Root path"
-                         FontWeight="SemiBold"
-                         Classes="label"/>
-              <TextBlock Text="{Binding PreviewRootPath}"
-                         TextWrapping="Wrap"/>
-              <TextBlock Text="Folders to create"
-                         FontWeight="SemiBold"
-                         Margin="0,4,0,0"
-                         Classes="label"/>
-              <ItemsControl ItemsSource="{Binding PreviewItems}">
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock Text="{Binding .}"
-                               TextWrapping="Wrap"/>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </StackPanel>
+            <Border Background="#22000000"
+                    BorderBrush="#44FFFFFF"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="12">
+              <StackPanel Spacing="8">
+                <TextBlock Text="Tree preview"
+                           FontWeight="SemiBold"
+                           Classes="label"/>
+                <TextBlock Text="{Binding PreviewTreeText}"
+                           FontFamily="Cascadia Mono,Consolas,Menlo,monospace"
+                           TextWrapping="NoWrap"
+                           IsVisible="{Binding PreviewTreeText, Converter={x:Static conv:StringConverters.NotNullOrEmpty}}"/>
+                <TextBlock Text="Preview will appear once base directory and primary folder are set"
+                           Classes="label"
+                           IsVisible="{Binding PreviewTreeText, Converter={x:Static conv:StringConverters.IsNullOrEmpty}}"/>
+              </StackPanel>
+            </Border>
           </StackPanel>
         </Grid>
       </Border>
 
       <!-- Status -->
       <Border IsVisible="{Binding StatusMessage, Converter={x:Static conv:StringConverters.NotNullOrEmpty}}"
+              Classes.has-status="{Binding StatusMessage, Converter={x:Static conv:StringConverters.NotNullOrEmpty}}"
               Background="{Binding IsSuccess, Converter={x:Static conv:BoolConverters.SuccessToBg}}"
               CornerRadius="10"
+              Classes="status-banner"
               Padding="12">
+        <Border.Transitions>
+          <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+            <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+          </Transitions>
+        </Border.Transitions>
+        <Border.Styles>
+          <Style Selector="Border.status-banner">
+            <Setter Property="Opacity" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#66FFFFFF"/>
+            <Setter Property="RenderTransform" Value="translate(0px,8px)"/>
+          </Style>
+          <Style Selector="Border.status-banner.has-status">
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="RenderTransform" Value="translate(0px,0px)"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
+          </Style>
+        </Border.Styles>
         <TextBlock Text="{Binding StatusMessage}"/>
       </Border>
 

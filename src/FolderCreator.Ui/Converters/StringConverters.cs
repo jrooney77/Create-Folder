@@ -7,4 +7,7 @@ public static class StringConverters
 {
     public static readonly IValueConverter NotNullOrEmpty =
         new FuncValueConverter<string?, bool>(s => !string.IsNullOrWhiteSpace(s));
+
+    public static readonly IValueConverter IsNullOrEmpty =
+        new FuncValueConverter<string?, bool>(s => string.IsNullOrWhiteSpace(s));
 }
