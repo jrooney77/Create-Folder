@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -29,6 +30,9 @@ public partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty]
     private string? previewRootPath;
+
+    [ObservableProperty]
+    private string? previewTreeText;
 
     public ObservableCollection<string> PreviewItems { get; } = new();
 
@@ -190,22 +194,38 @@ public partial class MainWindowViewModel : ObservableObject
         if (string.IsNullOrWhiteSpace(basePath) || string.IsNullOrWhiteSpace(mainName))
         {
             PreviewRootPath = null;
+            PreviewTreeText = null;
             PreviewItems.Clear();
             return;
         }
 
         var rootPath = Path.Combine(basePath, mainName);
         PreviewRootPath = rootPath;
+        var subfolderNames = Subfolders
+            .Select(s => (s.Name ?? string.Empty).Trim())
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .ToList();
 
         PreviewItems.Clear();
         PreviewItems.Add(rootPath);
 
-        foreach (var subfolderName in Subfolders
-                     .Select(s => (s.Name ?? string.Empty).Trim())
-                     .Where(n => !string.IsNullOrWhiteSpace(n)))
+        foreach (var subfolderName in subfolderNames)
         {
             PreviewItems.Add(Path.Combine(rootPath, subfolderName));
         }
+
+        var treeLines = new List<string>
+        {
+            $"{mainName}/"
+        };
+
+        for (var i = 0; i < subfolderNames.Count; i++)
+        {
+            var branch = i == subfolderNames.Count - 1 ? "└──" : "├──";
+            treeLines.Add($"  {branch} {subfolderNames[i]}");
+        }
+
+        PreviewTreeText = string.Join(Environment.NewLine, treeLines);
     }
 
     private async Task SaveLastBaseDirectoryAsync(string baseDirectoryPath)

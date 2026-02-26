@@ -13,6 +13,8 @@ This repository currently contains two app entry points:
 - Real-time folder name sanitization (trims whitespace and removes invalid filename characters as you type)
 - Clear success/error messaging
 - Live preview of the final root path and each folder path to be created
+- Tree-style preview rendering in the Preview card (monospace) using connectors (`├──`, `└──`) and ignoring empty subfolder rows
+- Animated status banner that fades/slides in when status updates are present, with accent-responsive border styling
 - Cross-platform UI built with Avalonia (desktop project)
 - Direction 2 visual foundation for the UI:
   - Frosted/glass window treatment with a glass surface container
@@ -118,6 +120,8 @@ dotnet build src/FolderCreator.Ui/FolderCreator.Ui.csproj
   - Stored field: `LastBaseDirectory` (restored on startup if the directory still exists)
 - In the Avalonia app, folder browsing is wired through MVVM (`BrowseBaseDirectoryCommand`) while folder picker UI stays in `MainWindow.axaml.cs` via a `PickFolderAsync` delegate on the view model.
 - `OpenLastCreatedCommand` is enabled only when `LastCreatedPath` is set and still exists on disk.
+- `PreviewTreeText` is refreshed alongside `PreviewItems`; list preview behavior remains intact for compatibility while the UI emphasizes tree view.
+- macOS note: if Avalonia native startup fails with `RenderTimer` error code `-6661`, the app now exits gracefully with a clear message instead of aborting; this points to a host/runtime graphics-session issue rather than user data.
 
 ## License
 
