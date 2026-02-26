@@ -46,13 +46,9 @@
                       Margin="16"
                       Spacing="12">
             <StackPanel Orientation="Horizontal" Spacing="10">
-              <Border Width="30"
-                      Height="30"
-                      CornerRadius="10"
-                      Background="#26FFFFFF">
+              <Border Classes="icon-chip">
                 <TextBlock Text="📂"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           Classes="icon-chip-glyph"/>
               </Border>
               <TextBlock Text="Base Directory" Classes="section"/>
             </StackPanel>
@@ -83,13 +79,9 @@
                       Margin="16"
                       Spacing="12">
             <StackPanel Orientation="Horizontal" Spacing="10">
-              <Border Width="30"
-                      Height="30"
-                      CornerRadius="10"
-                      Background="#26FFFFFF">
+              <Border Classes="icon-chip">
                 <TextBlock Text="📁"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           Classes="icon-chip-glyph"/>
               </Border>
               <TextBlock Text="Primary Folder Name" Classes="section"/>
             </StackPanel>
@@ -113,13 +105,9 @@
                       Spacing="12">
             <DockPanel LastChildFill="True">
               <StackPanel Orientation="Horizontal" Spacing="10">
-                <Border Width="30"
-                        Height="30"
-                        CornerRadius="10"
-                        Background="#26FFFFFF">
+                <Border Classes="icon-chip">
                   <TextBlock Text="➕"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"/>
+                             Classes="icon-chip-glyph"/>
                 </Border>
                 <TextBlock Text="Subfolders" Classes="section"/>
               </StackPanel>
@@ -161,13 +149,9 @@
                       Margin="16"
                       Spacing="12">
             <StackPanel Orientation="Horizontal" Spacing="10">
-              <Border Width="30"
-                      Height="30"
-                      CornerRadius="10"
-                      Background="#26FFFFFF">
+              <Border Classes="icon-chip">
                 <TextBlock Text="👁"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           Classes="icon-chip-glyph"/>
               </Border>
               <TextBlock Text="Preview" Classes="section"/>
             </StackPanel>
@@ -235,13 +219,9 @@
                       Margin="16"
                       Spacing="14">
             <StackPanel Orientation="Horizontal" Spacing="10">
-              <Border Width="30"
-                      Height="30"
-                      CornerRadius="10"
-                      Background="#26FFFFFF">
+              <Border Classes="icon-chip">
                 <TextBlock Text="🚀"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           Classes="icon-chip-glyph"/>
               </Border>
               <TextBlock Text="Create" Classes="section"/>
             </StackPanel>

@@ -19,9 +19,11 @@ This repository currently contains two app entry points:
 - Direction 2 visual foundation for the UI:
   - Frosted/glass window treatment with a glass surface container
   - Glass-card layout for all major sections (Base Directory, Primary Folder Name, Subfolders, Preview, Create/Open actions)
+  - Subtle muted blue gradient layering on `GlassSurface`, `CardBg`, and `CardBgDark` for a more premium glass finish
   - Left accent stripe treatment on cards using shared `Accent` brush
-  - Icon-chip section headers for faster visual scanning (📂 📁 ➕ 👁 🚀)
+  - Refined icon-chip section headers with consistent alignment, light borders, and improved contrast (📂 📁 ➕ 👁 🚀)
   - Typography hierarchy resources (`TextBlock.title`, `TextBlock.section`, `TextBlock.label`)
+  - Accent-tinted focus glow for `TextBox` inputs (soft, understated focus state)
   - Refined button classes (`primary`, `ghost`, `danger`) with hover lift + smooth transitions
   - Shared visual resources for `GlassSurface`, `CardBg`, `CardBgDark`, and `TextMuted`
 - Persists the last selected base directory between app launches (UI app)
