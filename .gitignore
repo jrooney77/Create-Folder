@@ -30,3 +30,4 @@ obj/
 # macOS app bundle output
 dist/
 dist/*.zip
+dist/*.dmg
