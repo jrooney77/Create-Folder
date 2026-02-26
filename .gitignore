@@ -26,3 +26,6 @@ obj/
 
 # Rider/JetBrains (if I ever use it)
 .idea/
+
+# macOS app bundle output
+dist/

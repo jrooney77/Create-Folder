@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0F1C2E"/>
+      <stop offset="1" stop-color="#1B2A41"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" rx="220" fill="url(#bg)"/>
+  <rect x="120" y="150" width="784" height="724" rx="90" fill="url(#glass)" stroke="#2E4A7D" stroke-opacity="0.6" stroke-width="10"/>
+
+  <!-- Folder -->
+  <path d="M250 390c0-44 36-80 80-80h120c28 0 38 10 56 34l20 26h168c44 0 80 36 80 80v270c0 44-36 80-80 80H330c-44 0-80-36-80-80V390z"
+        fill="#FFFFFF" fill-opacity="0.92"/>
+  <path d="M250 430h524c38 0 70 26 78 62l-44 258c-8 46-48 80-94 80H332c-46 0-86-34-94-80l-44-258c-8-36 22-62 56-62z"
+        fill="#DDE7FF" fill-opacity="0.95"/>
+
+  <!-- Accent highlight -->
+  <path d="M300 480h420c24 0 44 16 48 38l-28 164c-6 32-34 56-66 56H350c-32 0-60-24-66-56l-28-164c-4-22 14-38 44-38z"
+        fill="#2E4A7D" fill-opacity="0.16"/>
+
+  <!-- Spark -->
+  <path d="M770 330l14 36 36 14-36 14-14 36-14-36-36-14 36-14 14-36z"
+        fill="#FFFFFF" fill-opacity="0.95"/>
+</svg>
