@@ -82,6 +82,24 @@ If your environment blocks Avalonia telemetry file writes, run with telemetry di
 AVALONIA_TELEMETRY_OPTOUT=1 dotnet run --project src/FolderCreator.Ui/FolderCreator.Ui.csproj
 ```
 
+## Install (macOS)
+
+1. Download the latest `Create-Folder-macOS-<version>.zip` from GitHub Releases.
+2. Unzip the archive.
+3. Drag `Create Folder.app` into `Applications`.
+4. If macOS blocks it as an unidentified developer, right-click `Create Folder.app`, choose `Open`, then click `Open` again.
+
+## Build Locally (macOS)
+
+Requirements:
+- .NET SDK installed
+
+Build the macOS `.app` bundle (and distributable zip):
+
+```bash
+bash scripts/build-macos-app.sh
+```
+
 ## Build
 
 Build console app:
