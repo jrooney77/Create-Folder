@@ -24,6 +24,7 @@ for candidate in "${publish_candidates[@]}"; do
 done
 
 app_dir="$repo_root/dist/Create Folder.app"
+zip_path="$repo_root/dist/Create-Folder-macOS-${VERSION}.zip"
 contents_dir="$app_dir/Contents"
 macos_dir="$contents_dir/MacOS"
 resources_dir="$contents_dir/Resources"
@@ -153,5 +154,9 @@ EOF
 
 touch "$app_dir"
 
+rm -f "$zip_path"
+ditto -c -k --sequesterRsrc --keepParent "$app_dir" "$zip_path"
+
 printf 'Detected executable: %s\n' "$detected_exe_name"
 printf 'App bundle created: %s\n' "$app_dir"
+printf 'Distributable zip created: %s\n' "$zip_path"
